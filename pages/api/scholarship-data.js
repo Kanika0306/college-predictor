@@ -1,4 +1,4 @@
-import axios from "axios";
+import pool from "../../lib/db";
 
 export default async function handler(req, res) {
   const {
@@ -12,9 +12,22 @@ export default async function handler(req, res) {
   } = req.query;
 
   try {
-    const s3Url = `https://avantifellows-assets.s3.ap-south-1.amazonaws.com/futures/scholarship_data.json`;
-    const response = await axios.get(s3Url);
-    const scholarships = response.data;
+    // Instead of querying AWS S3 dynamically on every user click, use the indexed DB. 
+    // This reduces latency significantly and prevents egress costs!
+    const { rows: scholarships } = await pool.query(`
+      SELECT 
+        id, 
+        name as "Scholarship Name", 
+        status as "Status", 
+        grade_eligibility as "Grade", 
+        stream_eligibility as "Stream", 
+        gender as "Gender",
+        income_limit as "Family Income (in INR)", 
+        state as "State",
+        url as "URL"
+      FROM scholarships
+    `);
+
     // Helper function for flexible string matching
     const flexMatch = (value, target) => {
       if (Array.isArray(value)) {
