@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@google-cloud/bigquery": "^8.1.1",
     "axios": "^1.8.3",
     "express-rate-limit": "^6.7.0",
     "fs": "^0.0.1-security",
@@ -15,9 +16,12 @@
     "lodash": "^4.17.21",
     "lucide-react": "^0.395.0",
     "next": "^13.0.7",
+    "pg": "^8.20.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-select": "^5.7.3"
+    "react-select": "^5.7.3",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^6.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.16",
